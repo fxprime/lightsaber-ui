@@ -7,6 +7,29 @@ import { defineNode, NodeInterface, NumberInterface, SelectInterface } from "bak
 import { useStorage } from "@vueuse/core";
 import { ref } from "vue";
 
+/* -------------------------------------------------------------------------- */
+/*                              DEFINE INTERFACE                              */
+/* -------------------------------------------------------------------------- */
+import { BaklavaInterfaceTypes, NodeInterfaceType } from "@baklavajs/interface-types";
+import { stringType, numberType, booleanType, functionType, layerType, colorType, transitionType } from "./nodes/interfaceTypes";
+
+const baklavaView = useBaklava();
+const editor = baklavaView.editor;
+
+const nodeInterfaceTypes = new BaklavaInterfaceTypes(editor, { viewPlugin: baklavaView });
+nodeInterfaceTypes.addTypes(stringType, numberType, booleanType, functionType, layerType, colorType, transitionType);
+
+/* -------------------------------------------------------------------------- */
+/*                            END DEFINE INTERFACE                            */
+/* -------------------------------------------------------------------------- */
+
+import { Scale } from "./nodes/functions/Scale";
+import { Sum } from "./nodes/functions/Sum";
+import { Int } from "./nodes/functions/Int";
+import { Bladeangle } from "./nodes/functions/Bladeangle";
+
+
+
 const MyNode = defineNode({
   type: "MyNode",
   inputs: {
@@ -21,6 +44,12 @@ const MyNode = defineNode({
 
 const baklava = useBaklava();
 baklava.editor.registerNodeType(MyNode);
+baklava.editor.registerNodeType(Scale, { category: "Functions" });
+baklava.editor.registerNodeType(Sum, { category: "Functions" });
+baklava.editor.registerNodeType(Int, { category: "Functions" });
+baklava.editor.registerNodeType(Bladeangle, { category: "Functions" });
+// baklava.editor.graph.addNode(new Scale());
+// baklava.editor.graph.addNode(new Sum());
 
 const presets = useStorage('baklava-presets', {})
 
@@ -62,4 +91,4 @@ function load(preset) {
 </template>
 
 
-https://v2.baklava.tech/getting-started.html
+https://v2.baklava.tech/getting-started.html./nodes/functions/Scale
